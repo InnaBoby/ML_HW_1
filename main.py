@@ -1,15 +1,12 @@
 
 from fastapi import FastAPI
-import pickle
-from castom_transform import castom_transform
 from pydantic import BaseModel
-from typing import List
+from typing import Union, List
+import pickle
+from data_preprocess import data_preproc
+from castom_transform import castom_transform
 
 app = FastAPI()
-
-
-with open('/content/Lasso.pkl', 'rb') as f:
-    pipe = pickle.load(f)
 
 
 class Item(BaseModel):
@@ -32,12 +29,29 @@ class Items(BaseModel):
     objects: List[Item]
 
 
-@app.post("/predict_item")
-def predict_item(item: Item) -> float:
+@app.get("/")
+async def predict_price(file: Union [Item, Items]):
+     content = await file.read()
+     df = pd.read_csv(pd.compat.StringIO(content.decode('utf-8')))
+     with open('/content/Lasso.pkl', 'rb') as f:
+         pipe = pickle.load(f)
+     df = data_preproc(df)    
+     if type(df) == Items:
+         return Prediction(pipe.predict(df))
+     elif type(df) == Item:
+         return Prediction(pipe.predict(pd.DataFrame(df).T))
+     else:
+         return 'Не корректный формат данных' 
+    
 
-    return pipe.predict(pd.DataFrame(df_test_raw.loc[0]).T)
 
 
-@app.post("/predict_items")
-def predict_items(items: List[Item]) -> List[float]:
-    return pipe.predict(items)
+# @app.post("/predict_item")
+# def predict_item(item: Item) -> float:
+#     return ...
+
+
+# @app.post("/predict_items")
+# def predict_items(items: List[Item]) -> List[float]:
+#     return ...
+     
