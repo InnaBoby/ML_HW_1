@@ -37,4 +37,8 @@
 - не разобралась с загрузкой файлов в API, поэтому не удалось реализовать полноценный сервис
 
 ![image](https://github.com/user-attachments/assets/2864d690-8b9e-432a-a768-12109a19da7d)
+
+
+![image](https://github.com/user-attachments/assets/cae6c41d-4516-4b63-a78c-7c58cead3a82)
+
  
