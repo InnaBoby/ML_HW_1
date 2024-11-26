@@ -1,5 +1,5 @@
-# ML_HW_1
-Home work 1 : regression with inference
+# ML_HW_1 : regression with inference
+*** 
 
 ## **Docs:**
 
@@ -9,6 +9,8 @@ Home work 1 : regression with inference
 - **SalesAuto_report.html** - отчет data_profiler
 - **main.py** - файл с попыткой реализовать сервис
 - **README.md** - файл с основнями выводами
+
+***
 
 ## **Основные выводы:**
 
@@ -27,4 +29,5 @@ Home work 1 : regression with inference
 
 
 **Что не получилось:**
+
 -не получилось запустить сервер (из-за проблем с загрузкой кастомной функции)
