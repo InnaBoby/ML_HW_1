@@ -1,7 +1,7 @@
 # ML_HW_1
 Home work 1 : regression with inference
 
-##**Docs:**
+## **Docs:**
 
 - **AI_HW1_Regression_with_inference_pro.ipynb** - ноутбук с EDA, моделью регрессии и проведёнными экспериментами
 - **Lasso.pkl** -  файл с весами лучшей модели (Лассо регрессия, кастомный feature engineering, параметры скейлинга и импьютера)
@@ -10,7 +10,7 @@ Home work 1 : regression with inference
 - **main.py** - файл с попыткой реализовать сервис
 - **README.md** - файл с основнями выводами
 
-##**Основные выводы:**
+## **Основные выводы:**
 
 **Что было сделано:**
 
