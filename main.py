@@ -1,0 +1,43 @@
+
+from fastapi import FastAPI
+import pickle
+from castom_transform import castom_transform
+from pydantic import BaseModel
+from typing import List
+
+app = FastAPI()
+
+
+with open('/content/Lasso.pkl', 'rb') as f:
+    pipe = pickle.load(f)
+
+
+class Item(BaseModel):
+    name: str
+    year: int
+    selling_price: int
+    km_driven: int
+    fuel: str
+    seller_type: str
+    transmission: str
+    owner: str
+    mileage: str
+    engine: str
+    max_power: str
+    torque: str
+    seats: float
+
+
+class Items(BaseModel):
+    objects: List[Item]
+
+
+@app.post("/predict_item")
+def predict_item(item: Item) -> float:
+
+    return pipe.predict(pd.DataFrame(df_test_raw.loc[0]).T)
+
+
+@app.post("/predict_items")
+def predict_items(items: List[Item]) -> List[float]:
+    return pipe.predict(items)
