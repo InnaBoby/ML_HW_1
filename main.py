@@ -1,7 +1,8 @@
 
 from fastapi import FastAPI
 from pydantic import BaseModel
-from typing import Union, List
+from typing import List
+import pandas as pd
 import pickle
 from data_preprocess import data_preproc
 from castom_transform import castom_transform
@@ -29,29 +30,31 @@ class Items(BaseModel):
     objects: List[Item]
 
 
+
+class Prediction(BaseModel):
+    predictions: List[float]
+
+
 @app.get("/")
-async def predict_price(file: Union [Item, Items]):
-     content = await file.read()
-     df = pd.read_csv(pd.compat.StringIO(content.decode('utf-8')))
-     with open('/content/Lasso.pkl', 'rb') as f:
-         pipe = pickle.load(f)
-     df = data_preproc(df)    
-     if type(df) == Items:
-         return Prediction(pipe.predict(df))
-     elif type(df) == Item:
-         return Prediction(pipe.predict(pd.DataFrame(df).T))
-     else:
-         return 'Не корректный формат данных' 
-    
+async def welcome_message():
+    return {"message": "Hello!! Welcome to my first API!"}
 
 
+@app.post("/predict_item", response_model=Prediction)
+def predict_item(item: Item) -> float:
+    df = pd.DataFrame([el.dict() for el in item.objects])
+    with open('Lasso.pkl', 'rb') as f:
+        pipe = pickle.load(f)
+    df = data_preproc(df) 
+    preds = pipe.predict(df)
+    return Prediction(preds)     
+      
 
-# @app.post("/predict_item")
-# def predict_item(item: Item) -> float:
-#     return ...
-
-
-# @app.post("/predict_items")
-# def predict_items(items: List[Item]) -> List[float]:
-#     return ...
-     
+@app.post("/predict_items")
+def predict_items(items: List[Item]) -> List[float]:
+    df = pd.DataFrame([el.dict() for el in item.objects])
+    with open('Lasso.pkl', 'rb') as f:
+        pipe = pickle.load(f)
+    df = data_preproc(df) 
+    preds = pipe.predict(df)
+    return Prediction(preds)   
