@@ -6,6 +6,7 @@
 - **AI_HW1_Regression_with_inference_pro.ipynb** - ноутбук с EDA, моделью регрессии и проведёнными экспериментами
 - **Lasso.pkl** -  файл с весами лучшей модели (Лассо регрессия, кастомный feature engineering, параметры скейлинга и импьютера)
 - **castom_transform.py** - файл с функцией для генерации новых признаков
+- **data_preprocess.py** - файл для предобработки признаков
 - **SalesAuto_report.html** - отчет data_profiler
 - **main.py** - файл с попыткой реализовать сервис
 - **README.md** - файл с основнями выводами
