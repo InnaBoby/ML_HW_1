@@ -40,9 +40,23 @@ async def welcome_message():
     return {"message": "Hello!! Welcome to my first API!"}
 
 
-@app.post("/predict_item", response_model=Prediction)
-def predict_item(item: Item) -> float:
-    df = pd.DataFrame([el.dict() for el in item.objects])
+@app.post("/predict_item")
+def predict_item(name : str,
+                 year : int,
+                 km_driven	: int,
+                 fuel : str,
+                 seller_type : str,
+                 transmission : str, 
+                 owner : str,
+                 mileage : str, 
+                 engine : str, 
+                 max_power : str, 
+                 torque : str, 
+                 seats : float) -> float:
+    data = {'name' : name, 'year' : year, 'km_driven' : km_driven, 'fuel' : fuel, 'seller_type' : seller_type,
+            'transmission' : transmission, 'owner' : owner, 'mileage' : mileage, 'engine' : engine, 'max_power' : max_power, 
+            'torque' : torque, 'seats' : seats}
+    df = pd.DataFrame(data=data)
     with open('Lasso.pkl', 'rb') as f:
         pipe = pickle.load(f)
     df = data_preproc(df) 
@@ -51,8 +65,22 @@ def predict_item(item: Item) -> float:
       
 
 @app.post("/predict_items")
-def predict_items(items: List[Item]) -> List[float]:
-    df = pd.DataFrame([el.dict() for el in item.objects])
+def predict_items(name : List[str],
+                 year : List[int],
+                 km_driven	: List[int],
+                 fuel : List[str],
+                 seller_type : List[str],
+                 transmission : List[str], 
+                 owner : List[str],
+                 mileage : List[str], 
+                 engine : List[str], 
+                 max_power : List[str], 
+                 torque : List[str], 
+                 seats : List[float]) -> List[float]:
+    data = {'name' : name, 'year' : year, 'km_driven' : km_driven, 'fuel' : fuel, 'seller_type' : seller_type,
+            'transmission' : transmission, 'owner' : owner, 'mileage' : mileage, 'engine' : engine, 'max_power' : max_power, 
+            'torque' : torque, 'seats' : seats}
+    df = pd.DataFrame(data=data)
     with open('Lasso.pkl', 'rb') as f:
         pipe = pickle.load(f)
     df = data_preproc(df) 
